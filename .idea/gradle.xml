@@ -15,8 +15,25 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/resource-server" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/client-server" />
+        <option name="gradleHome" value="C:\Program Files\Gradle\gradle-8.14" />
         <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/client-server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/resource-server" />
+        <option name="gradleHome" value="C:\Program Files\Gradle\gradle-8.14" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/resource-server" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

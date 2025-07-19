@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/client-server/client-server.iml" filepath="$PROJECT_DIR$/client-server/client-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/oauth2-system.iml" filepath="$PROJECT_DIR$/oauth2-system.iml" />
-      <module fileurl="file://$PROJECT_DIR$/resource-server/resource-server.iml" filepath="$PROJECT_DIR$/resource-server/resource-server.iml" />
     </modules>
   </component>
 </project>

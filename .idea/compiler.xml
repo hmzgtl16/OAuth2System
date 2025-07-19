@@ -5,6 +5,12 @@
       <module name="authorization-server" options="-parameters" />
       <module name="authorization-server.main" options="-parameters" />
       <module name="authorization-server.test" options="-parameters" />
+      <module name="client-server" options="-parameters" />
+      <module name="client-server.main" options="-parameters" />
+      <module name="client-server.test" options="-parameters" />
+      <module name="resource-server" options="-parameters" />
+      <module name="resource-server.main" options="-parameters" />
+      <module name="resource-server.test" options="-parameters" />
     </option>
   </component>
 </project>
