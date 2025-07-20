@@ -30,12 +30,12 @@ public class HomeController {
     @GetMapping("/profile")
     public String profile(Model model, OAuth2AuthorizedClient authorizedClient) {
         String userProfile = this.webClient
-            .get()
-            .uri("http://localhost:8081/api/user/profile")
-            .attributes(oauth2AuthorizedClient(authorizedClient))
-            .retrieve()
-            .bodyToMono(String.class)
-            .block();
+                .get()
+                .uri("http://localhost:8081/api/user/profile")
+                .attributes(oauth2AuthorizedClient(authorizedClient))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
 
         model.addAttribute("userProfile", userProfile);
         return "profile";
@@ -45,12 +45,12 @@ public class HomeController {
     public String admin(Model model, OAuth2AuthorizedClient authorizedClient) {
         try {
             String users = this.webClient
-                .get()
-                .uri("http://localhost:8081/api/admin/users")
-                .attributes(oauth2AuthorizedClient(authorizedClient))
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+                    .get()
+                    .uri("http://localhost:8081/api/admin/users")
+                    .attributes(oauth2AuthorizedClient(authorizedClient))
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
 
             model.addAttribute("users", users);
         } catch (Exception e) {
