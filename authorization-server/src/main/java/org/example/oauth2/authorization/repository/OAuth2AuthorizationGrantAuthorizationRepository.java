@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OAuth2GrantAuthorizationRepository extends CrudRepository<OAuth2GrantAuthorization, String> {
+public interface OAuth2AuthorizationGrantAuthorizationRepository extends CrudRepository<OAuth2GrantAuthorization, String> {
 
     <T extends OAuth2CodeGrantAuthorization> T findByState(String state);
 
@@ -29,9 +29,6 @@ public interface OAuth2GrantAuthorizationRepository extends CrudRepository<OAuth
 
     <T extends OAuth2DeviceCodeGrantAuthorization> T findByUserCode_TokenValue(String userCode);
 
-    <T extends OAuth2DeviceCodeGrantAuthorization> T findByDeviceStateOrDeviceCode_TokenValueOrUserCode_TokenValue(
-            String deviceState,
-            String deviceCode,
-            String userCode
-    );
+    <T extends OAuth2DeviceCodeGrantAuthorization> T findByDeviceStateOrDeviceCode_TokenValueOrUserCode_TokenValue(String deviceState, String deviceCode,
+      String userCode);
 }

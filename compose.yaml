@@ -1,13 +1,13 @@
 services:
+#  authorization-server-db:
+#    image: 'postgres:13.21'
+#    environment:
+#      - 'POSTGRES_DB=authorization-server_db'
+#      - 'POSTGRES_PASSWORD=authorization-server_password'
+#      - 'POSTGRES_USER=authorization-server_user'
+#    ports:
+#      - '5432:5432'
   authorization-server-db:
-    image: 'postgres:13.21'
-    environment:
-      - 'POSTGRES_DB=authorization-server_db'
-      - 'POSTGRES_PASSWORD=authorization-server_password'
-      - 'POSTGRES_USER=authorization-server_user'
-    ports:
-      - '5432:5432'
-  a:
     image: 'redis:latest'
     ports:
         - "6379:6379"

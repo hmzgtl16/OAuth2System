@@ -19,38 +19,23 @@ public class OAuth2RegisteredClient {
 
     @Id
     private final String id;
-
     @Indexed
     private final String clientId;
-
     private final Instant clientIdIssuedAt;
-
     private final String clientSecret;
-
     private final Instant clientSecretExpiresAt;
-
     private final String clientName;
-
     private final Set<ClientAuthenticationMethod> clientAuthenticationMethods;
-
     private final Set<AuthorizationGrantType> authorizationGrantTypes;
-
     private final Set<String> redirectUris;
-
     private final Set<String> postLogoutRedirectUris;
-
     private final Set<String> scopes;
-
     private final ClientSettings clientSettings;
-
     private final TokenSettings tokenSettings;
 
-    public OAuth2RegisteredClient(String id, String clientId, Instant clientIdIssuedAt, String clientSecret,
-                                  Instant clientSecretExpiresAt, String clientName,
-                                  Set<ClientAuthenticationMethod> clientAuthenticationMethods,
-                                  Set<AuthorizationGrantType> authorizationGrantTypes, Set<String> redirectUris,
-                                  Set<String> postLogoutRedirectUris, Set<String> scopes, ClientSettings clientSettings,
-                                  TokenSettings tokenSettings) {
+    public OAuth2RegisteredClient(String id, String clientId, Instant clientIdIssuedAt, String clientSecret, Instant clientSecretExpiresAt, String clientName,
+      Set<ClientAuthenticationMethod> clientAuthenticationMethods, Set<AuthorizationGrantType> authorizationGrantTypes, Set<String> redirectUris,
+      Set<String> postLogoutRedirectUris, Set<String> scopes, ClientSettings clientSettings, TokenSettings tokenSettings) {
         this.id = id;
         this.clientId = clientId;
         this.clientIdIssuedAt = clientIdIssuedAt;
@@ -121,17 +106,13 @@ public class OAuth2RegisteredClient {
     public static class ClientSettings {
 
         private final boolean requireProofKey;
-
         private final boolean requireAuthorizationConsent;
-
         private final String jwkSetUrl;
-
         private final JwsAlgorithm tokenEndpointAuthenticationSigningAlgorithm;
-
         private final String x509CertificateSubjectDN;
 
         public ClientSettings(boolean requireProofKey, boolean requireAuthorizationConsent, String jwkSetUrl,
-                              JwsAlgorithm tokenEndpointAuthenticationSigningAlgorithm, String x509CertificateSubjectDN) {
+          JwsAlgorithm tokenEndpointAuthenticationSigningAlgorithm, String x509CertificateSubjectDN) {
             this.requireProofKey = requireProofKey;
             this.requireAuthorizationConsent = requireAuthorizationConsent;
             this.jwkSetUrl = jwkSetUrl;
@@ -158,31 +139,22 @@ public class OAuth2RegisteredClient {
         public String getX509CertificateSubjectDN() {
             return this.x509CertificateSubjectDN;
         }
-
     }
 
     public static class TokenSettings {
 
         private final Duration authorizationCodeTimeToLive;
-
         private final Duration accessTokenTimeToLive;
-
         private final OAuth2TokenFormat accessTokenFormat;
-
         private final Duration deviceCodeTimeToLive;
-
         private final boolean reuseRefreshTokens;
-
         private final Duration refreshTokenTimeToLive;
-
         private final SignatureAlgorithm idTokenSignatureAlgorithm;
-
         private final boolean x509CertificateBoundAccessTokens;
 
-        public TokenSettings(Duration authorizationCodeTimeToLive, Duration accessTokenTimeToLive,
-                             OAuth2TokenFormat accessTokenFormat, Duration deviceCodeTimeToLive, boolean reuseRefreshTokens,
-                             Duration refreshTokenTimeToLive, SignatureAlgorithm idTokenSignatureAlgorithm,
-                             boolean x509CertificateBoundAccessTokens) {
+        public TokenSettings(Duration authorizationCodeTimeToLive, Duration accessTokenTimeToLive, OAuth2TokenFormat accessTokenFormat,
+          Duration deviceCodeTimeToLive, boolean reuseRefreshTokens, Duration refreshTokenTimeToLive, SignatureAlgorithm idTokenSignatureAlgorithm,
+          boolean x509CertificateBoundAccessTokens) {
             this.authorizationCodeTimeToLive = authorizationCodeTimeToLive;
             this.accessTokenTimeToLive = accessTokenTimeToLive;
             this.accessTokenFormat = accessTokenFormat;

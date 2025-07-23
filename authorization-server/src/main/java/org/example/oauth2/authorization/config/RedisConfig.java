@@ -1,9 +1,9 @@
 package org.example.oauth2.authorization.config;
 
 import org.example.oauth2.authorization.converter.*;
-import org.example.oauth2.authorization.repository.OAuth2AuthorizationConsentRepository;
-import org.example.oauth2.authorization.repository.OAuth2GrantAuthorizationRepository;
+import org.example.oauth2.authorization.repository.OAuth2AuthorizationGrantAuthorizationRepository;
 import org.example.oauth2.authorization.repository.OAuth2RegisteredClientRepository;
+import org.example.oauth2.authorization.repository.OAuth2UserConsentRepository;
 import org.example.oauth2.authorization.service.RedisOAuth2AuthorizationConsentService;
 import org.example.oauth2.authorization.service.RedisOAuth2AuthorizationService;
 import org.example.oauth2.authorization.service.RedisRegisteredClientRepository;
@@ -52,27 +52,29 @@ public class RedisConfig {
     public RedisRegisteredClientRepository registeredClientRepository(
             OAuth2RegisteredClientRepository registeredClientRepository
     ) {
-        RedisRegisteredClientRepository repository = new RedisRegisteredClientRepository(registeredClientRepository);
-        repository.save(RegisteredClients.oidcClient());
-        return repository;
+        RedisRegisteredClientRepository redisRegisteredClientRepository =
+                new RedisRegisteredClientRepository(registeredClientRepository);
+        redisRegisteredClientRepository.save(RegisteredClients.oidcClient());
+
+        return redisRegisteredClientRepository;
     }
 
     @Bean
     public RedisOAuth2AuthorizationService authorizationService(
             RegisteredClientRepository registeredClientRepository,
-            OAuth2GrantAuthorizationRepository oAuth2GrantAuthorizationRepository
+            OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository
     ) {
         return new RedisOAuth2AuthorizationService(
                 registeredClientRepository,
-                oAuth2GrantAuthorizationRepository
+                authorizationGrantAuthorizationRepository
         );
     }
 
     @Bean
     public RedisOAuth2AuthorizationConsentService authorizationConsentService(
-            OAuth2AuthorizationConsentRepository oAuth2AuthorizationConsentRepository
+            OAuth2UserConsentRepository userConsentRepository
     ) {
-        return new RedisOAuth2AuthorizationConsentService(oAuth2AuthorizationConsentRepository);
+        return new RedisOAuth2AuthorizationConsentService(userConsentRepository);
     }
 }
 

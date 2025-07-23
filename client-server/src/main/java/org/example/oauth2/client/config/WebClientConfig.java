@@ -25,7 +25,7 @@ public class WebClientConfig {
     }
 
     @Bean
-    public OAuth2AuthorizedClientManager authorizedClientManager(
+    public OAuth2AuthorizedClientManager authorizedCjhlientManager(
             ClientRegistrationRepository clientRegistrationRepository,
             OAuth2AuthorizedClientRepository authorizedClientRepository
     ) {
@@ -33,7 +33,6 @@ public class WebClientConfig {
                 OAuth2AuthorizedClientProviderBuilder.builder()
                         .authorizationCode()
                         .refreshToken()
-                        .clientCredentials()
                         .build();
 
         DefaultOAuth2AuthorizedClientManager authorizedClientManager =

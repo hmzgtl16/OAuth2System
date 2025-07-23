@@ -10,26 +10,15 @@ import java.util.Set;
 public class OAuth2CodeGrantAuthorization extends OAuth2GrantAuthorization {
 
     private final Principal principal;
-
     private final OAuth2AuthorizationRequest authorizationRequest;
-
     private final AuthorizationCode authorizationCode;
 
     @Indexed
-    private final String state; // Used to correlate the request during the authorization consent flow
+    private final String state;
 
-    public OAuth2CodeGrantAuthorization(
-            String id,
-            String registeredClientId,
-            String principalName,
-            Set<String> authorizedScopes,
-            AccessToken accessToken,
-            RefreshToken refreshToken,
-            Principal principal,
-            OAuth2AuthorizationRequest authorizationRequest,
-            AuthorizationCode authorizationCode,
-            String state
-    ) {
+    public OAuth2CodeGrantAuthorization(String id, String registeredClientId, String principalName, Set<String> authorizedScopes,
+      AccessToken accessToken, RefreshToken refreshToken, Principal principal, OAuth2AuthorizationRequest authorizationRequest,
+      AuthorizationCode authorizationCode, String state) {
         super(id, registeredClientId, principalName, authorizedScopes, accessToken, refreshToken);
         this.principal = principal;
         this.authorizationRequest = authorizationRequest;
@@ -55,12 +44,7 @@ public class OAuth2CodeGrantAuthorization extends OAuth2GrantAuthorization {
 
     public static class AuthorizationCode extends AbstractToken {
 
-        public AuthorizationCode(
-                String tokenValue,
-                Instant issuedAt,
-                Instant expiresAt,
-                boolean invalidated
-        ) {
+        public AuthorizationCode(String tokenValue, Instant issuedAt, Instant expiresAt, boolean invalidated) {
             super(tokenValue, issuedAt, expiresAt, invalidated);
         }
     }

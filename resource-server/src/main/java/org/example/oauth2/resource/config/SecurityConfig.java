@@ -16,23 +16,27 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((auth) ->
-                        auth
-                                .requestMatchers("/api/public/**").permitAll()
-                                .requestMatchers("/api/user/**").hasAuthority("SCOPE_read")
-                                .requestMatchers(HttpMethod.POST, "/api/admin/**").hasAuthority("SCOPE_write")
-                                .requestMatchers("/api/admin/**").hasAuthority("SCOPE_read")
-                                .anyRequest().authenticated()
+        http
+                .securityMatcher("/products/**")
+                .authorizeHttpRequests((authorize) ->
+                        authorize.anyRequest().hasAuthority("SCOPE_read")
                 )
                 .oauth2ResourceServer((oauth2) ->
                         oauth2.jwt(Customizer.withDefaults())
+                        /*
+                        oauth2.jwt((jwt) ->
+                                jwt.jwkSetUri("http://127.0.0.1:9000/oauth2/jwks")
+                        )
+                        */
                 );
 
         return http.build();
     }
 
+    /*
     @Bean
     public JwtDecoder jwtDecoder() {
-        return JwtDecoders.fromIssuerLocation("http://localhost:8080");
+        return JwtDecoders.fromIssuerLocation("http://127.0.0.1:9000");
     }
+    */
 }

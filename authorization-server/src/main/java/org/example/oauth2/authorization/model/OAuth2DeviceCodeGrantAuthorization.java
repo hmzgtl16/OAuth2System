@@ -9,29 +9,14 @@ import java.util.Set;
 public class OAuth2DeviceCodeGrantAuthorization extends OAuth2GrantAuthorization {
 
     private final Principal principal;
-
     private final DeviceCode deviceCode;
-
     private final UserCode userCode;
-
     private final Set<String> requestedScopes;
-
     @Indexed
-    private final String deviceState; // Used to correlate the request during the authorization consent flow
+    private final String deviceState;
 
-    public OAuth2DeviceCodeGrantAuthorization(
-            String id,
-            String registeredClientId,
-            String principalName,
-            Set<String> authorizedScopes,
-            AccessToken accessToken,
-            RefreshToken refreshToken,
-            Principal principal,
-            DeviceCode deviceCode,
-            UserCode userCode,
-            Set<String> requestedScopes,
-            String deviceState
-    ) {
+    public OAuth2DeviceCodeGrantAuthorization(String id, String registeredClientId, String principalName, Set<String> authorizedScopes, AccessToken accessToken,
+                                              RefreshToken refreshToken, Principal principal, DeviceCode deviceCode, UserCode userCode, Set<String> requestedScopes, String deviceState) {
         super(id, registeredClientId, principalName, authorizedScopes, accessToken, refreshToken);
         this.principal = principal;
         this.deviceCode = deviceCode;
@@ -62,24 +47,14 @@ public class OAuth2DeviceCodeGrantAuthorization extends OAuth2GrantAuthorization
 
     public static class DeviceCode extends AbstractToken {
 
-        public DeviceCode(
-                String tokenValue,
-                Instant issuedAt,
-                Instant expiresAt,
-                boolean invalidated
-        ) {
+        public DeviceCode(String tokenValue, Instant issuedAt, Instant expiresAt, boolean invalidated) {
             super(tokenValue, issuedAt, expiresAt, invalidated);
         }
     }
 
     public static class UserCode extends AbstractToken {
 
-        public UserCode(
-                String tokenValue,
-                Instant issuedAt,
-                Instant expiresAt,
-                boolean invalidated
-        ) {
+        public UserCode(String tokenValue, Instant issuedAt, Instant expiresAt, boolean invalidated) {
             super(tokenValue, issuedAt, expiresAt, invalidated);
         }
     }

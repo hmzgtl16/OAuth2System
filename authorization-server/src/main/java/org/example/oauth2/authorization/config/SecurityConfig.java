@@ -8,7 +8,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +23,6 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -40,25 +38,27 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
-                OAuth2AuthorizationServerConfigurer.authorizationServer();
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer
+                .authorizationServer()
+                .oidc(Customizer.withDefaults());
 
         http
                 .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .with(authorizationServerConfigurer, (authorizationServer) ->
-                        authorizationServer.oidc(Customizer.withDefaults())    // Enable OpenID Connect 1.0
-                )
+                .with(authorizationServerConfigurer, Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) ->
                         authorize.anyRequest().authenticated()
                 )
+                /*
                 .exceptionHandling((exceptions) ->
-                        exceptions.defaultAuthenticationEntryPointFor(
-                                new LoginUrlAuthenticationEntryPoint("/login"),
-                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                        exceptions.authenticationEntryPoint(
+                                new LoginUrlAuthenticationEntryPoint("/login")
                         )
                 )
-                .oauth2ResourceServer(resourceServer ->
-                        resourceServer.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer((resourceServer) ->
+                        resourceServer.jwt(Customizer.withDefaults())
+                );
+                */
+                .formLogin(Customizer.withDefaults());
 
         return http.build();
     }
@@ -66,6 +66,7 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .authorizeHttpRequests((authorize) ->
                         authorize.anyRequest().authenticated()
@@ -75,28 +76,27 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /*
+    @Bean
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder().build();
+    }
+    */
+
     @Bean
     public UserDetailsService userDetailsService() {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         UserDetails user = User.builder()
                 .username("user")
                 .password("password")
-                .passwordEncoder(encoder::encode)
+                .passwordEncoder(passwordEncoder::encode)
                 .roles("USER")
                 .build();
 
         return new InMemoryUserDetailsManager(user);
     }
 
-	/*
-	@Bean
-	public RegisteredClientRepository registeredClientRepository() {
-
-
-		return new InMemoryRegisteredClientRepository(oidcClient);
-	}
-    */
-
+    /*
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
         KeyPair keyPair = generateRsaKey();
@@ -115,13 +115,6 @@ public class SecurityConfig {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
 
-    @Bean
-    public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder()
-                .issuer("http://localhost:8080")
-                .build();
-    }
-
     private static KeyPair generateRsaKey() {
         KeyPair keyPair;
         try {
@@ -133,4 +126,5 @@ public class SecurityConfig {
         }
         return keyPair;
     }
+    */
 }
