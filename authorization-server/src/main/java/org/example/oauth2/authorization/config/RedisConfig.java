@@ -7,10 +7,12 @@ import org.example.oauth2.authorization.repository.OAuth2UserConsentRepository;
 import org.example.oauth2.authorization.service.RedisOAuth2AuthorizationConsentService;
 import org.example.oauth2.authorization.service.RedisOAuth2AuthorizationService;
 import org.example.oauth2.authorization.service.RedisRegisteredClientRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.convert.RedisCustomConversions;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -22,9 +24,15 @@ import java.util.Arrays;
 @EnableRedisRepositories("org.example.oauth2.authorization.repository")
 public class RedisConfig {
 
+    @Value("${spring.data.redis.host}")
+    private String host;
+
+    @Value("${spring.data.redis.port}")
+    private int port;
+
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory();
+    public LettuceConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
     }
 
     @Bean

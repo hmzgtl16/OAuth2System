@@ -1,0 +1,33 @@
+# Stage 1: Build the native image
+FROM ghcr.io/graalvm/native-image-community:21 AS builder
+
+WORKDIR /app
+
+# Copy the Gradle wrapper and build files
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle.kts .
+COPY settings.gradle.kts .
+
+# Make the Gradle wrapper executable
+RUN chmod +x ./gradlew
+
+# Copy the source code
+COPY src src
+
+# Build the native image
+RUN ./gradlew nativeCompile
+
+# Stage 2: Create a minimal runtime image
+FROM ubuntu:22.04
+
+WORKDIR /app
+
+# Copy the native executable from the builder stage
+COPY --from=builder /app/build/native/nativeCompile/authorization-server /app/authorization-server
+
+# Expose the application port
+EXPOSE 9000
+
+# Set the entry point to run the native executable
+ENTRYPOINT ["/app/authorization-server"]

@@ -3,12 +3,18 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authorization-server" options="-parameters" />
+      <module name="authorization-server.aot" options="-parameters" />
+      <module name="authorization-server.aotTest" options="-parameters" />
       <module name="authorization-server.main" options="-parameters" />
       <module name="authorization-server.test" options="-parameters" />
       <module name="client-server" options="-parameters" />
+      <module name="client-server.aot" options="-parameters" />
+      <module name="client-server.aotTest" options="-parameters" />
       <module name="client-server.main" options="-parameters" />
       <module name="client-server.test" options="-parameters" />
       <module name="resource-server" options="-parameters" />
+      <module name="resource-server.aot" options="-parameters" />
+      <module name="resource-server.aotTest" options="-parameters" />
       <module name="resource-server.main" options="-parameters" />
       <module name="resource-server.test" options="-parameters" />
     </option>

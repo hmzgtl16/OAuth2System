@@ -1,13 +1,92 @@
 services:
-#  authorization-server-db:
-#    image: 'postgres:13.21'
-#    environment:
-#      - 'POSTGRES_DB=authorization-server_db'
-#      - 'POSTGRES_PASSWORD=authorization-server_password'
-#      - 'POSTGRES_USER=authorization-server_user'
-#    ports:
-#      - '5432:5432'
-  authorization-server-db:
-    image: 'redis:latest'
+
+  #  authorization-server-db:
+  #    image: 'postgres:13.21'
+  #    environment:
+  #      - 'POSTGRES_DB=authorization-server_db'
+  #      - 'POSTGRES_PASSWORD=authorization-server_password'
+  #      - 'POSTGRES_USER=authorization-server_user'
+  #    ports:
+  #      - '5432:5432'
+
+  # Redis database for Authorization Server
+  auth-store:
+    container_name: 'auth-store'
+    image: redis:latest
     ports:
-        - "6379:6379"
+      - "6379:6379"
+    networks:
+      - oauth2-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - auth-store:/data
+    restart: no
+
+  # Native image for Authorization Server (built with bootBuildImage)
+  authorization-server:
+    image: org.example.oauth2/authorization-server:0.0.1-SNAPSHOT
+    container_name: 'authorization-server'
+    ports:
+      - "9000:9000"
+    environment:
+      - REDIS_HOST=auth-store
+      - REDIS_PORT=6379
+      - AUTHORIZATION_SERVER_ISSUER=http://authorization-server:9000
+    depends_on:
+      auth-store:
+        condition: service_healthy
+    networks:
+      - oauth2-network
+    volumes:
+      - authorization-server:/src
+    restart: no
+
+  # Native image for Resource Server (built with bootBuildImage)
+  resource-server:
+    image: org.example.oauth2/resource-server:0.0.1-SNAPSHOT
+    container_name: 'resource-server'
+    ports:
+      - "8090:8090"
+    environment:
+      - RESOURCE_SERVER_JWT_ISSUER_URI=http://authorization-server:9000
+    depends_on:
+      - authorization-server
+    networks:
+      - oauth2-network
+    volumes:
+      - resource-server:/src
+    restart: no
+
+  # Native image for Client Server (built with bootBuildImage)
+  client-server:
+    image: org.example.oauth2/client-server:0.0.1-SNAPSHOT
+    container_name: 'client-server'
+    ports:
+      - "8080:8080"
+    environment:
+      - CLIENT_PROVIDER_ISSUER_URI=http://authorization-server:9000
+    depends_on:
+      - authorization-server
+    networks:
+      - oauth2-network
+    volumes:
+      - client-server:/src
+    restart: no
+
+networks:
+  oauth2-network:
+    driver: bridge
+
+volumes:
+  auth-store:
+    driver: local
+  authorization-server:
+    driver: local
+  resource-server:
+    driver: local
+  client-server:
+    driver: local

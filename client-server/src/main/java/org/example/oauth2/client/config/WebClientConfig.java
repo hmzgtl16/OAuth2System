@@ -25,7 +25,7 @@ public class WebClientConfig {
     }
 
     @Bean
-    public OAuth2AuthorizedClientManager authorizedCjhlientManager(
+    public OAuth2AuthorizedClientManager authorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,
             OAuth2AuthorizedClientRepository authorizedClientRepository
     ) {
