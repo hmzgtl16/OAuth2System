@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="authorization-server.aot" target="21" />
+      <module name="authorization-server.aotTest" target="21" />
+      <module name="client-server.aot" target="21" />
+      <module name="client-server.aotTest" target="21" />
+      <module name="resource-server.aot" target="21" />
+      <module name="resource-server.aotTest" target="21" />
+    </bytecodeTargetLevel>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authorization-server" options="-parameters" />

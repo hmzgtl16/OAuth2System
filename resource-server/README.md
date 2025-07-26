@@ -103,37 +103,6 @@ The `bootBuildImage` task uses Cloud Native Buildpacks to create optimized conta
 
 3. The server will be available at http://localhost:8090
 
-#### Using Docker with Native Image
-
-##### Option 1: Using Dockerfile.native
-
-1. Build and run using the provided Dockerfile.native:
-   ```
-   docker build -f Dockerfile.native -t resource-server-native .
-   docker run -p 8090:8090 resource-server-native
-   ```
-
-##### Option 2: Using bootBuildImage (Recommended)
-
-1. Build the image using bootBuildImage:
-   ```
-   ./gradlew bootBuildImage
-   ```
-
-2. Run the container:
-   ```
-   docker run -p 8090:8090 org.example.oauth2/resource-server:0.0.1-SNAPSHOT
-   ```
-
-The server will be available at http://localhost:8090
-
-#### Native Image Benefits
-
-- Faster startup time (typically under 100ms)
-- Lower memory consumption
-- Smaller deployment size
-- No JVM required at runtime
-
 ## API Endpoints
 
 - **GET /products**: Returns a list of products

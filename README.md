@@ -65,7 +65,7 @@ See [Resource Server README](./resource-server/README.md) for more details.
 
 1. Start Redis:
    ```
-   docker-compose up -d redis
+   docker-compose up -d auth-store
    ```
 
 2. Start the Authorization Server:

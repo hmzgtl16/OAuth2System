@@ -4,7 +4,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.5.3"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.11.0"
+	//id("org.graalvm.buildtools.native") version "0.11.0"
 }
 
 group = "org.example.oauth2"
@@ -34,6 +34,7 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+/*
 // Configure GraalVM Native Image options
 graalvmNative {
 	metadataRepository {
@@ -53,3 +54,4 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	environment.put("BP_JVM_VERSION", "21")
 	environment.put("BP_JVM_CDS_ENABLED", "true")
 }
+*/
